@@ -1,1 +1,1 @@
-# Automating_CEL-Seq_pipeline
+# building and Automating CEL-Seq2 pipeline
