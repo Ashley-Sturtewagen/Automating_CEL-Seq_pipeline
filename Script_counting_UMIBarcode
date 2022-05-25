@@ -1,1 +1,39 @@
 
+
+#Filename = "C:/Users/Ashle/Documents/Schooldocumenten/Jaar 4/Afstuderen/30-3-2022 human data set/results/Galaxy88-[Samtools_view_on_data_58__filtered_alignments].sam" #\ to / error gone
+#Filename = "C:/Users/Ashle/Documents/Schooldocumenten/Jaar 4/Afstuderen/30-3-2022 human data set/results/shortsamfile.sam"
+Filename = "C:/Users/Ashle/Documents/Schooldocumenten/Jaar 4/Afstuderen/30-3-2022 human data set/results/Galaxy31-[Samtools_view_on_data_22_and_data_30__filtered_alignments].sam"
+with open(Filename,'r') as samfile:
+    count = 0
+    linelist = []
+    UMIlist = []
+    #barcodelist = []
+    idlist = []
+    for line in samfile:
+        if line[0:1] == "@":
+            continue
+        count += 1
+        # print(line)
+        linesplit = line.split("\t")
+        linelist.append(linesplit)
+
+for line in linelist:
+    # print(line[0].split("_")[1])
+
+    UMIlist.append(line[0].split("_")[1])
+    #barcodelist.append(linelist(line[0])[3])
+    idlist.append(line[2].split("|")[0])
+    #print(line[0].split("_")[1:3],line[2].split("|")[0])
+    # line [0] is element QNAME split on _ and take the first barcode , Line [2] is elemen
+
+print(f"Total number of lines in the samfile is: {len(linelist)}")
+# Python f strings embed expressions into a string literal. You can use f strings to embed variables, strings, or the results of functions into a string. An f string are prefixed with “f” at the start, before the string itself begins. Introduced in Python 3.6, make it easier to format strings
+
+import pandas as pd
+
+df = pd.DataFrame({'UMI': UMIlist, 'ID': idlist})
+pd.crosstab(index=df['UMI'], columns='count')
+df1 = pd.crosstab(index=df['ID'], columns=df['UMI'])
+
+df1.to_csv('C:/Users/Ashle/Documents/Schooldocumenten/Jaar 4/Afstuderen/30-3-2022 human data set/results/count_table4.txt')
+
