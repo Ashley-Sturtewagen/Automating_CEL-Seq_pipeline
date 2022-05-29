@@ -1,14 +1,13 @@
 
+Open interactive Jupyter notebook
 
-#Filename = "C:/Users/Ashle/Documents/Schooldocumenten/Jaar 4/Afstuderen/30-3-2022 human data set/results/Galaxy88-[Samtools_view_on_data_58__filtered_alignments].sam" #\ to / error gone
-#Filename = "C:/Users/Ashle/Documents/Schooldocumenten/Jaar 4/Afstuderen/30-3-2022 human data set/results/shortsamfile.sam"
-Filename = "C:/Users/Ashle/Documents/Schooldocumenten/Jaar 4/Afstuderen/30-3-2022 human data set/results/Galaxy31-[Samtools_view_on_data_22_and_data_30__filtered_alignments].sam"
-with open(Filename,'r') as samfile:
+with open(get(filenumber in Galaxy),'r') as samfile:
     count = 0
     linelist = []
     UMIlist = []
-    #barcodelist = []
+    barcodelist = []
     idlist = []
+
     for line in samfile:
         if line[0:1] == "@":
             continue
@@ -21,8 +20,12 @@ for line in linelist:
     # print(line[0].split("_")[1])
 
     UMIlist.append(line[0].split("_")[1])
-    #barcodelist.append(linelist(line[0])[3])
+    #barcodelist.append(line[0](line[0])
+    barcode = line[0]
+    barcode_sequence = barcode[-6:]
+    barcodelist.append(barcode_sequence)
     idlist.append(line[2].split("|")[0])
+    #print(UMIlist, barcodelist, idlist)
     #print(line[0].split("_")[1:3],line[2].split("|")[0])
     # line [0] is element QNAME split on _ and take the first barcode , Line [2] is elemen
 
@@ -31,9 +34,14 @@ print(f"Total number of lines in the samfile is: {len(linelist)}")
 
 import pandas as pd
 
-df = pd.DataFrame({'UMI': UMIlist, 'ID': idlist})
-pd.crosstab(index=df['UMI'], columns='count')
-df1 = pd.crosstab(index=df['ID'], columns=df['UMI'])
+df = pd.DataFrame({'UMI': UMIlist, 'Barcode': barcodelist, 'ID': idlist})
+df1 = df.drop_duplicates()
+#print(df1)
+counter = df1[df1.columns[0]].count()
+#print(counter)
 
-df1.to_csv('C:/Users/Ashle/Documents/Schooldocumenten/Jaar 4/Afstuderen/30-3-2022 human data set/results/count_table4.txt')
+pf = pd.crosstab(index=df1['Barcode'], columns='counter')
+#print(pf)
+df2 = pd.crosstab(index=df1['ID'], columns=df['Barcode'])
+#print(df2)
 
