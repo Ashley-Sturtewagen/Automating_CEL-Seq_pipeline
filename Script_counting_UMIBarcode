@@ -1,13 +1,10 @@
 
-Open interactive Jupyter notebook
-
-with open(get(filenumber in Galaxy),'r') as samfile:
+with open(get(91),'r') as samfile:
     count = 0
     linelist = []
-    UMIlist = []
     barcodelist = []
+    UMIlist = []
     idlist = []
-
     for line in samfile:
         if line[0:1] == "@":
             continue
@@ -19,29 +16,34 @@ with open(get(filenumber in Galaxy),'r') as samfile:
 for line in linelist:
     # print(line[0].split("_")[1])
 
-    UMIlist.append(line[0].split("_")[1])
-    #barcodelist.append(line[0](line[0])
-    barcode = line[0]
-    barcode_sequence = barcode[-6:]
-    barcodelist.append(barcode_sequence)
+    barcodelist.append(line[0].split("_")[1])
+    UMI = line[0]
+    UMI_sequence = UMI[-6:]
+    UMIlist.append(UMI_sequence)
     idlist.append(line[2].split("|")[0])
     #print(UMIlist, barcodelist, idlist)
     #print(line[0].split("_")[1:3],line[2].split("|")[0])
-    # line [0] is element QNAME split on _ and take the first barcode , Line [2] is elemen
+    # line [0] is element QNAME split on _ and take the first barcode , Line 0 and take the last six [-6:],  Line [2] is element Rname and split on |
 
 print(f"Total number of lines in the samfile is: {len(linelist)}")
 # Python f strings embed expressions into a string literal. You can use f strings to embed variables, strings, or the results of functions into a string. An f string are prefixed with “f” at the start, before the string itself begins. Introduced in Python 3.6, make it easier to format strings
 
 import pandas as pd
 
-df = pd.DataFrame({'UMI': UMIlist, 'Barcode': barcodelist, 'ID': idlist})
-df1 = df.drop_duplicates()
-#print(df1)
-counter = df1[df1.columns[0]].count()
+df = pd.DataFrame({'Barcode': barcodelist, 'UMI': UMIlist, 'ID': idlist})
+#print(df)
+
+df1 = df.drop_duplicates() #[remove duplicated reads]
+# #print(df1)
+counter = df1[df1.columns[0]].count() #count
 #print(counter)
 
 pf = pd.crosstab(index=df1['Barcode'], columns='counter')
 #print(pf)
-df2 = pd.crosstab(index=df1['ID'], columns=df['Barcode'])
+df2 = pd.crosstab(index=df1['ID'], columns=df1['Barcode'])
 #print(df2)
 
+
+
+df2.to_csv('count_table.txt')
+put('count_table.txt')
