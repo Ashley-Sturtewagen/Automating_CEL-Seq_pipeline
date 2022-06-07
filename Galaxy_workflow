@@ -4,20 +4,79 @@ Create a new history and rename it
 Upload data in Galaxy
 
 1. Preparing data
-Build a Dataset pair for the two FASTQ files
-Click the Operations on multiple datasets check box at the top of the history panel
-Check the two boxes next to the R1 and R2 scRNA FASTQ samples
-Click For all selected… and choose Build dataset pair
-Ensure that the forward read is the R1 sample, and the reverse read is the R2 sample.
+* Build a Dataset pair for the two FASTQ files
+* Click the Operations on multiple datasets check box at the top of the history panel
+    Check the two boxes next to the R1 and R2 scRNA FASTQ samples
+* Click For all selected… and choose Build dataset pair
+    Ensure that the forward read is the R1 sample, and the reverse read is the R2 sample.
 Click ‘Swap’ otherwise.
 Set the name of the pair.
 
-2. FASTQC 
+2. FASTQC (default version)
 Short  read data from history: Paired FastQ (Dataset collection)
 
-3. UMI-Tools extract
+3. UMI-Tools extract (Version 0.5.5.1)
 "Library type": Paired-end Dataset collection 
 "Barcode on both reads?: Barcode on fiirst read only
 
 "Use known barcodes?": No
+
+“Barcode pattern for first read”: NNNNNNCCCCCC
+“Enable quality filter?”: No
+
+4. RNA-STAR (default version)
+“Single-end or paired-end reads”: Single-end
+
+“RNA-Seq FASTQ/FASTA file”: Reads2 (output of UMI-tools extract tool)
+
+“Custom or built-in reference genome”: Use a built-in index
+“Reference genome with or without an annotation”: use genome reference without builtin gene-model
+
+Select reference genome”:  human hg19 
+
+“Gene model (gff3,gtf) file for splice junctions”: gencode.v19.chr_patch_hapl_scaff.annotation.gtf
+
+"Length of the genomic sequence around annotated junctions": 	1
+
+5. MultiQC Tool (default version)
+“Results”:
+“1: Results”:
+“Which tool was used to generate logs?”:STAR
+    “STAR output”:
+“1: STAR output”
+    “Type of STAR output?”:Log
+“STAR log output” :(Select the STAR output file that ends in “log”)
+    Click on the galaxy-eye symbol on the MultiQC Webpage
+    
+6. FeatureCounts (default version)
+“Alignment file”: mapped_reads (output of Filter BAM tool)
+
+“Specify strand information”:Stranded (Forward)
+
+“Gene annotation file”: in your history
+
+“Gene annotation file”: Mus_musculus.GRCm38.93.mm10.UCSC.ncbiRefSeq.gtf
+
+In “Advanced options”:
+“Count multi-mapping reads/fragments”: Enabled; Both multi-mapping and multi-overlapping features are included 
+
+“Exon-exon junctions”: No (default)
+“Annotates the alignment file with ‘XS:Z:’-tags to described per read or read-pair the corresponding assigned feature(s).”: Yes
+
+7. UMI-tools count (Version 0.5.5.1)
+“Sorted BAM file”: out_file1 (output of FeatureCounts tool)
+
+“UMI Extract Method”: Barcodes are contained at the end of the read separated by a delimiter
+
+“Bam is paired-end”:No
+
+“Method to identify group of reads”:Unique
+
+“Extra Parameters”:
+
+“Deduplicate per gene.”:XT
+
+“Group reads only if they have the same cell barcode.”:Yes
+
+“Prepend a label to all column headers”:No modifications
 
