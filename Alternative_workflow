@@ -1,0 +1,30 @@
+Galaxy training: "Understanding Barcodes" and "Pre-processing of Single-Cell RNA Data"
+
+Create a new history and rename it 
+Upload data in Galaxy
+
+1. Preparing data
+* Build a Dataset pair for the two FASTQ files
+* Click the Operations on multiple datasets check box at the top of the history panel
+    Check the two boxes next to the R1 and R2 scRNA FASTQ samples
+* Click For all selected… and choose Build dataset pair
+    Ensure that the forward read is the R1 sample, and the reverse read is the R2 sample.
+Click ‘Swap’ otherwise.
+Set the name of the pair.
+
+2. FASTQC (default version)
+Short  read data from history: Paired FastQ (Dataset collection)
+
+3. UMI-Tools extract (Version 0.5.5.1)
+"Library type": Paired-end Dataset collection 
+"Barcode on both reads?: Barcode on fiirst read only
+
+"Use known barcodes?": No
+
+“Barcode pattern for first read”: NNNNNNCCCCCC
+“Enable quality filter?”: No
+
+4. Cutadapt 
+
+
+5. concatenate datasets tail-to-head (cat)
