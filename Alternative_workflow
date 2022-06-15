@@ -24,7 +24,58 @@ Short  read data from history: Paired FastQ (Dataset collection)
 “Barcode pattern for first read”: NNNNNNCCCCCC
 “Enable quality filter?”: No
 
-4. Cutadapt 
+4. Cutadapt (Default version)
 
+"Single-end or Paired-end reads?":	single
+FASTQ/A file: UMI extract dataset read 2 (sequence)
 
-5. concatenate datasets tail-to-head (cat)
+"Cut bases from reads before adapter trimming":	-43
+
+5. concatenate datasets tail-to-head (cat) (Default version)
+concatenate dataset: Cutadapt files on read2 UMI-tools extract
+
+6. Map with BWA (default version)
+
+"Will you select a reference genome from your history or use a built-in index?":	history
+Dataset: reference cDNA file
+"Algorithm for constructing the BWT index":	Auto. Let BWA decide the best algorithm to use
+"Select input type":	single
+"Select fastq dataset": Concatenated file of extracted UMIs
+
+Set advanced single end options?	set
+Maximum number of alignments to output in the XA tag:	100
+"Set read groups information?":	do_not_set
+
+Select analysis mode	full
+"maximum edit distance if the value is integer, or the fraction of missing alignments given 2% uniform base error rate if float. In the latter case, the maximum edit distance is automatically chosen for different read lengths.":	0.04
+"maximum number or gap openings":	1
+"maximum number of gap extensions":	-1
+"do not put an indel within this many bp towards the ends":	5
+"maximum occurrences for extending a long deletion":	10
+"seed length":	200
+"maximum differences in the seed":	2
+"maximum entries in the queue":	2000000
+"mismatch penalty":	3
+"gap open penalty":	11
+"gap extension penalty":	4
+"stop searching when there are more than this value of equally best hits":	30
+"quality threshold for read trimming down to 35bp":	0
+"length of barcode":	0
+
+7. Samtools view (Default version)
+Inputdata: Bam file of map with BWA
+Output: Sam
+
+8. Samtools stat (default version)
+input Sam file 
+
+9. MultiQC (Default version)
+input: Samtools stat 
+insert dataset --> Stat. 
+
+10. Interactive jupyter notebook
+fresh notebook
+Data input: Samtools view 
+
+11. Notebook
+see script countingUMI-barcodes
