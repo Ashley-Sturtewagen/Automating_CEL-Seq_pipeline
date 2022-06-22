@@ -53,7 +53,7 @@ Select analysis mode	full
 "maximum number of gap extensions":	-1
 "do not put an indel within this many bp towards the ends":	5
 "maximum occurrences for extending a long deletion":	10
-"seed length":	32
+"seed length":	32 (200 resulted in an error) 
 "maximum differences in the seed":	2
 "maximum entries in the queue":	2000000
 "mismatch penalty":	3
